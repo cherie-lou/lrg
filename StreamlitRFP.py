@@ -151,36 +151,36 @@ if input_file is not None:
         df_compare['Awarded Total Linehaul Difference']=df_compare['Total Linehaul_'+s1]-df_compare['Total Linehaul_'+s2]
         df_compare = df_compare.drop(['ShipmentID_x','ShipmentID_y','Shipment Count_'+s2],axis =1)
 
-        df_dis['Lane']=df_dis.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
-        df_loads['Lane']=df_loads.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
-        count_lane = df_loads.groupby('Lane').agg({"ShipmentID":"count"})
-        pivot_lane = df_dis.pivot(index='Lane',columns='Carrier',values = ['Disc','Min'])
-        pivot_lane.columns = [f'{col[1]}_{col[0]}' for col in pivot_lane.columns]
-        pivot_lane = pivot_lane.merge(count_lane,on='Lane').reset_index()
+    df_dis['Lane']=df_dis.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
+    df_loads['Lane']=df_loads.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
+    count_lane = df_loads.groupby('Lane').agg({"ShipmentID":"count"})
+    pivot_lane = df_dis.pivot(index='Lane',columns='Carrier',values = ['Disc','Min'])
+    pivot_lane.columns = [f'{col[1]}_{col[0]}' for col in pivot_lane.columns]
+    pivot_lane = pivot_lane.merge(count_lane,on='Lane').reset_index()
 
         
-        if st.button("Scenario Comparison"):
-            st.dataframe(df_compare)
+    if st.button("Scenario Comparison"):
+        st.dataframe(df_compare)
             
-        if st.button("Download Scenario Comparison"):
-            with pd.ExcelWriter('Scenario Comparison.xlsx', engine='xlsxwriter') as writer:
-                df_compare.to_excel(writer)
+    if st.button("Download Scenario Comparison"):
+        with pd.ExcelWriter('Scenario Comparison.xlsx', engine='xlsxwriter') as writer:
+            df_compare.to_excel(writer)
 
             
-        st.subheader("Rate Review")
-        #select primary carrier for Rate Review Analysis
-        primary_carrier = st.multiselect("Primary Carrier",carrier_ava)
+    st.subheader("Rate Review")
+    #select primary carrier for Rate Review Analysis
+    primary_carrier = st.multiselect("Primary Carrier",carrier_ava)
 
-        df_primary = RateReviewPrimary(primary_carrier,pivot_lane)
-        df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_list)
-        df_ratereview =Ratereview(df_primary,df_other,primary_carrier)
+    df_primary = RateReviewPrimary(primary_carrier,pivot_lane)
+    df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_list)
+    df_ratereview =Ratereview(df_primary,df_other,primary_carrier)
 
-        if st.button("Rate Review"):
-            st.dataframe(df_ratereview)
+    if st.button("Rate Review"):
+        st.dataframe(df_ratereview)
             
-        if st.button("Download Rate Review"):
-            with pd.ExcelWriter('Rate Review.xlsx', engine='xlsxwriter') as writer:
-                df_compare.to_excel(writer)   
+    if st.button("Download Rate Review"):
+        with pd.ExcelWriter('Rate Review.xlsx', engine='xlsxwriter') as writer:
+            df_compare.to_excel(writer)   
 
     
 
