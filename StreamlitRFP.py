@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-st.title("RFPTool")
+st.title("RFPToolV1")
 st.header('File Input')
 input_file = st.file_uploader("Upload an Excel File", type=["xls", "xlsx"])
 
@@ -164,16 +164,16 @@ if input_file is not None:
         if st.button("Download Scenario Comparison"):
             with pd.ExcelWriter('Scenario Comparison.xlsx', engine='xlsxwriter') as writer:
                 df_compare.to_excel(writer)
-    
+
             
         st.subheader("Rate Review")
         #select primary carrier for Rate Review Analysis
         primary_carrier = st.multiselect("Primary Carrier",carrier_ava)
-    
+
         df_primary = RateReviewPrimary(primary_carrier,pivot_lane)
         df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_list)
         df_ratereview =Ratereview(df_primary,df_other,primary_carrier)
-    
+
         if st.button("Rate Review"):
             st.dataframe(df_ratereview)
             
