@@ -158,28 +158,28 @@ if input_file is not None:
         pivot_lane = pivot_lane.merge(count_lane,on='Lane').reset_index()
 
         
-    if st.button("Scenario Comparison"):
-        st.dataframe(df_compare)
-        
-    if st.button("Download Scenario Comparison"):
-        with pd.ExcelWriter('Scenario Comparison.xlsx', engine='xlsxwriter') as writer:
-            df_compare.to_excel(writer)
-
-        
-    st.subheader("Rate Review")
-    #select primary carrier for Rate Review Analysis
-    primary_carrier = st.multiselect("Primary Carrier",carrier_ava)
-
-    df_primary = RateReviewPrimary(primary_carrier,pivot_lane)
-    df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_list)
-    df_ratereview =Ratereview(df_primary,df_other,primary_carrier)
-
-    if st.button("Rate Review"):
-        st.dataframe(df_ratereview)
-        
-    if st.button("Download Rate Review"):
-        with pd.ExcelWriter('Rate Review.xlsx', engine='xlsxwriter') as writer:
-            df_compare.to_excel(writer)   
+        if st.button("Scenario Comparison"):
+            st.dataframe(df_compare)
+            
+        if st.button("Download Scenario Comparison"):
+            with pd.ExcelWriter('Scenario Comparison.xlsx', engine='xlsxwriter') as writer:
+                df_compare.to_excel(writer)
+    
+            
+        st.subheader("Rate Review")
+        #select primary carrier for Rate Review Analysis
+        primary_carrier = st.multiselect("Primary Carrier",carrier_ava)
+    
+        df_primary = RateReviewPrimary(primary_carrier,pivot_lane)
+        df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_list)
+        df_ratereview =Ratereview(df_primary,df_other,primary_carrier)
+    
+        if st.button("Rate Review"):
+            st.dataframe(df_ratereview)
+            
+        if st.button("Download Rate Review"):
+            with pd.ExcelWriter('Rate Review.xlsx', engine='xlsxwriter') as writer:
+                df_compare.to_excel(writer)   
 
     
 
