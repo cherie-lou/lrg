@@ -172,7 +172,7 @@ if input_file is not None:
         with pd.ExcelWriter(output_scenario, engine='xlsxwriter') as writer:
             df_compare.to_excel(writer)
         data_scenario = output_scenario.getvalue()
-        st.download_buttone(label = "Download Scenario Comparison",data = data_scenario,file_name = custome_scenario_name,key = 'download')
+        st.download_button(label = "Download Scenario Comparison",data = data_scenario,file_name = custome_scenario_name,key = 'download')
 
             
     st.subheader("Rate Review")
@@ -191,7 +191,7 @@ if input_file is not None:
         with pd.ExcelWriter(output_rr, engine='xlsxwriter') as writer:
             df_ratereview.to_excel(writer)
         data_rr = output_rr.getvalue()
-        st.download_buttone(label = "Download Rate Review",data = data_rr,file_name = custome_rr_name,key = 'download') 
+        st.download_button(label = "Download Rate Review",data = data_rr,file_name = custome_rr_name,key = 'download') 
 
     
 
