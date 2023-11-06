@@ -191,7 +191,7 @@ if input_file is not None:
 st.header('Output Setting')
 custom_filename = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
 st.header('Download output')
-if st.button("Download"):  
+if st.download_button("Download"):  
     default_filename = "RFPResult.xlsx"
 
     # Determine the output filename
