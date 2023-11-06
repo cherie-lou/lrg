@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import openpyxl
+
+st.markdown("[Download RFP TemplateV1.xlsx](RFPTool1.xlsx)", unsafe_allow_html=True)
+
 st.title("RFPToolV1")
 st.header('File Input')
 input_file = st.file_uploader("Upload an Excel File", type=["xls", "xlsx"])
