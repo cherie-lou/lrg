@@ -167,12 +167,12 @@ if input_file is not None:
     if st.button("Scenario Comparison"):
         st.dataframe(df_compare)
             
-        custome_scenario_name = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
-        output_scenario = io.BytesIO()
-        with pd.ExcelWriter(output_scenario, engine='xlsxwriter') as writer:
-            df_compare.to_excel(writer)
-        data_scenario = output_scenario.getvalue()
-        st.download_button(label = "Download Scenario Comparison",data = data_scenario,file_name = custome_scenario_name,key = 'download')
+        # custome_scenario_name = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
+        # output_scenario = io.BytesIO()
+        # with pd.ExcelWriter(output_scenario, engine='xlsxwriter') as writer:
+        #     df_compare.to_excel(writer)
+        # data_scenario = output_scenario.getvalue()
+        # st.download_button(label = "Download Scenario Comparison",data = data_scenario,file_name = custome_scenario_name,key = 'download')
 
             
     st.subheader("Rate Review")
@@ -186,12 +186,12 @@ if input_file is not None:
     if st.button("Rate Review"):
         st.dataframe(df_ratereview)
             
-        custome_rr_name = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
-        output_rr = io.BytesIO()
-        with pd.ExcelWriter(output_rr, engine='xlsxwriter') as writer:
-            df_ratereview.to_excel(writer)
-        data_rr = output_rr.getvalue()
-        st.download_button(label = "Download Rate Review",data = data_rr,file_name = custome_rr_name,key = 'download') 
+        # custome_rr_name = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
+        # output_rr = io.BytesIO()
+        # with pd.ExcelWriter(output_rr, engine='xlsxwriter') as writer:
+        #     df_ratereview.to_excel(writer)
+        # data_rr = output_rr.getvalue()
+        # st.download_button(label = "Download Rate Review",data = data_rr,file_name = custome_rr_name,key = 'download') 
 
     
 
