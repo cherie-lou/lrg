@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import openpyxl
+import xlsxwriter
 
 st.markdown("[Download RFP TemplateV1.xlsx](https://logrgadmin.sharepoint.com/:x:/t/engineering/Ef67ReTKSZ1JjeIyYrktfpoBmiooobNeLLUqZH8d72cVwg?e=rbIV4u)", unsafe_allow_html=True)
 
