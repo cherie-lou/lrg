@@ -167,9 +167,12 @@ if input_file is not None:
     if st.button("Scenario Comparison"):
         st.dataframe(df_compare)
             
-    if st.button("Download Scenario Comparison"):
-        with pd.ExcelWriter('Scenario Comparison.xlsx', engine='xlsxwriter') as writer:
+    if custome_scenario_name = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):"):
+        output_scenario = io.BytesIO()
+        with pd.ExcelWriter(output_scenario, engine='xlsxwriter') as writer:
             df_compare.to_excel(writer)
+        data_scenario = output_scenario.getvalue()
+        st.download_buttone(label = "Download Scenario Comparison",data = data_scenario,file_name = custome_scenario_name,key = 'download')
 
             
     st.subheader("Rate Review")
@@ -183,9 +186,12 @@ if input_file is not None:
     if st.button("Rate Review"):
         st.dataframe(df_ratereview)
             
-    if st.button("Download Rate Review"):
-        with pd.ExcelWriter('Rate Review.xlsx', engine='xlsxwriter') as writer:
-            df_compare.to_excel(writer)   
+    if custome_rr_name = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):"):
+        output_rr = io.BytesIO()
+        with pd.ExcelWriter(output_rr, engine='xlsxwriter') as writer:
+            df_ratereview.to_excel(writer)
+        data_rr = output_rr.getvalue()
+        st.download_buttone(label = "Download Rate Review",data = data_rr,file_name = custome_rr_name,key = 'download') 
 
     
 
@@ -193,38 +199,19 @@ if input_file is not None:
     custom_filename = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
     st.header('Download output')
 
-    output = io.BytesIO()  # Create a bytes buffer to store the Excel file
-    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+    output_final = io.BytesIO()  # Create a bytes buffer to store the Excel file
+    with pd.ExcelWriter(output_final, engine='xlsxwriter') as writer:
         df_bycarrier.to_excel(writer, sheet_name='Selected Summary Table')
         df_missing_filtered.to_excel(writer, sheet_name='Missing Lanes Table', index=False)
         df_bycarrier_od.to_excel(writer, sheet_name='Orig Dest Carrier Summary Table')
         merged_df.to_excel(writer, sheet_name='All Combination Table', index=False)
 
     # Prepare the Excel file for download
-    excel_data = output.getvalue()
+    excel_data_final = output_final.getvalue()
 
 # Offer the download of the Excel file
-    st.download_button(label="Download Excel File", data=excel_data, file_name='example.xlsx', key='download')
+    st.download_button(label="Download Excel File", data=excel_data_final, file_name=custom_filename, key='download')
 
-# if st.button("Download"):
-#     default_filename = "RFPResult.xlsx"
-
-#     # Determine the output filename
-#     if custom_filename:
-#         filename = custom_filename
-#     else:
-#         filename = default_filename
-#     output_path = filename
-
-#     with pd.ExcelWriter(output_path, engine='xlsxwriter') as writer:
-#         df_bycarrier.to_excel(writer, sheet_name='Selected Summary Table')
-#         df_missing_filtered.to_excel(writer, sheet_name='Missing Lanes Table', index=False)
-#         df_bycarrier_od.to_excel(writer, sheet_name='Orig Dest Carrier Summary Table')
-#         merged_df.to_excel(writer, sheet_name='All Combination Table', index=False)
-
-#     # Offer the download link
-#     with open(output_path, 'rb') as file:
-#         st.download_button(label='Download Excel File', data=file, key='download_excel')
 
 
         
