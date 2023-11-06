@@ -191,7 +191,7 @@ if input_file is not None:
 st.header('Output Setting')
 custom_filename = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
 st.header('Download output')
-if st.download_button("Download"):  
+if st.button("Download"):
     default_filename = "RFPResult.xlsx"
 
     # Determine the output filename
@@ -206,6 +206,12 @@ if st.download_button("Download"):
         df_missing_filtered.to_excel(writer, sheet_name='Missing Lanes Table', index=False)
         df_bycarrier_od.to_excel(writer, sheet_name='Orig Dest Carrier Summary Table')
         merged_df.to_excel(writer, sheet_name='All Combination Table', index=False)
+
+    # Offer the download link
+    with open(output_path, 'rb') as file:
+        st.download_button(label='Download Excel File', data=file, key='download_excel')
+
+
         
 
         
