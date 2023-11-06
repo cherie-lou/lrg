@@ -189,22 +189,22 @@ if input_file is not None:
 
     
 
-st.header('Output Setting')
-custom_filename = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
-st.header('Download output')
+    st.header('Output Setting')
+    custom_filename = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
+    st.header('Download output')
 
-output = io.BytesIO()  # Create a bytes buffer to store the Excel file
-with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-    df_bycarrier.to_excel(writer, sheet_name='Selected Summary Table')
-    df_missing_filtered.to_excel(writer, sheet_name='Missing Lanes Table', index=False)
-    df_bycarrier_od.to_excel(writer, sheet_name='Orig Dest Carrier Summary Table')
-    merged_df.to_excel(writer, sheet_name='All Combination Table', index=False)
+    output = io.BytesIO()  # Create a bytes buffer to store the Excel file
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df_bycarrier.to_excel(writer, sheet_name='Selected Summary Table')
+        df_missing_filtered.to_excel(writer, sheet_name='Missing Lanes Table', index=False)
+        df_bycarrier_od.to_excel(writer, sheet_name='Orig Dest Carrier Summary Table')
+        merged_df.to_excel(writer, sheet_name='All Combination Table', index=False)
 
     # Prepare the Excel file for download
-excel_data = output.getvalue()
+    excel_data = output.getvalue()
 
 # Offer the download of the Excel file
-st.download_button(label="Download Excel File", data=excel_data, file_name='example.xlsx', key='download')
+    st.download_button(label="Download Excel File", data=excel_data, file_name='example.xlsx', key='download')
 
 # if st.button("Download"):
 #     default_filename = "RFPResult.xlsx"
