@@ -180,7 +180,7 @@ if input_file is not None:
     primary_carrier = st.multiselect("Primary Carrier",carrier_ava)
 
     df_primary = RateReviewPrimary(primary_carrier,pivot_lane)
-    df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_list)
+    df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_ava)
     df_ratereview =Ratereview(df_primary,df_other,primary_carrier)
 
     if st.button("Rate Review"):
