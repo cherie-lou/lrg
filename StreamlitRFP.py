@@ -155,6 +155,7 @@ if input_file is not None:
         df_compare['Discount Difference']=df_compare['Disc Non Min_'+s1]-df_compare['Disc Non Min_'+s2]
         df_compare['Awarded Total Linehaul Difference']=df_compare['Total Linehaul_'+s1]-df_compare['Total Linehaul_'+s2]
         df_compare = df_compare.drop(['ShipmentID_x','ShipmentID_y','Shipment Count_'+s2],axis =1)
+        df_compare.columns=df_compare.columns.str.replace('Shipment Count_'+s1,'#Shipment')
 
     df_dis['Lane']=df_dis.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
     df_loads['Lane']=df_loads.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
