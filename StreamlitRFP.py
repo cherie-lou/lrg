@@ -33,11 +33,12 @@ def LaneCalculation(df_lane,merged_df,carrierx,x):
     cx_nonmin_df = carrierx_df[carrierx_df['MinFilter']=='Non-Min'].groupby('Lane').agg({'Linehaul': 'sum', 'Czalite0%': 'sum'})
     df_l = df_lane.copy()
     df_l['Shipment Count'+x]=carrierx_df.groupby("Lane").agg({"ShipmentID":"count"})
-    # df_l['LLC Carrier'+x]=carrierx_df.groupby("Lane").agg({"Carrier":"first"})
-    df_l['AvgMin'+x]=cx_min_df.groupby('Lane').agg({'Linehaul':'mean'})
+    df_l['LLC Carrier'+x]=carrierx_df.groupby("Lane").agg({"Carrier":"first"})
+    df_l['#Min'+x]=cx_min_df.groupby('Lane').agg({'ShipmentID':'count'})
     df_l['Disc Non Min'+x]= 1-cx_nonmin_df['Linehaul'] / cx_nonmin_df['Czalite0%']
     df_l['Total Linehaul'+x]=carrierx_df.groupby('Lane').agg({'Linehaul': 'sum'})
     return df_l
+
 
 def RateReviewPrimary(primary_carrier,pivot_lane):
     col_list = ['Lane','ShipmentID']
@@ -151,7 +152,7 @@ if input_file is not None:
         df_lane_2 = LaneCalculation(df_lane,merged_df,selected_carrier2,'_'+s2)
         # # df_lane=df_lane.merge(df_lane_1,on = 'ShipmentID')
         df_compare = df_lane_1.merge(df_lane_2,on="Lane")
-        df_compare['Min Difference'] =  df_compare['AvgMin_'+s1]-df_compare['AvgMin_'+s2]
+        df_compare['Min Difference'] =  df_compare['#Min_'+s1]-df_compare['#Min_'+s2]
         df_compare['Discount Difference']=df_compare['Disc Non Min_'+s1]-df_compare['Disc Non Min_'+s2]
         df_compare['Awarded Total Linehaul Difference']=df_compare['Total Linehaul_'+s1]-df_compare['Total Linehaul_'+s2]
         df_compare = df_compare.drop(['ShipmentID_x','ShipmentID_y','Shipment Count_'+s2],axis =1)
