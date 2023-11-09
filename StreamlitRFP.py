@@ -190,7 +190,7 @@ if input_file is not None:
     df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_ava)
     df_ratereview =Ratereview(df_primary,df_other,primary_carrier)
     df_ratereview.columns=df_ratereview.columns.str.replace('ShipmentID','#Shipment')
-
+    merged_df = merged_df.drop(['Lane_x','Lane_y'],axis =1)
     
     if st.button("Rate Review"):
         
