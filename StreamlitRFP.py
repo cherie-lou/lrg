@@ -74,6 +74,7 @@ def Ratereview(df_primary,df_other,primary_carrier):
         df_ratereview[disc_title]=df_ratereview[p+'_Disc']-df_ratereview['LLC-Disc']
         df_ratereview[min_title]=df_ratereview[p+'_Min']-df_ratereview['LLC-Min']
         # df_ratereview[disc_title] = df_ratereview.style.applymap(lambda x:style_disc_cell(x),subset=[disc_title])
+    df_ratereview.columns=ratereview.columns.str.replace('ShipmentID','#Shipment')
     return df_ratereview
 
 if input_file is not None:
