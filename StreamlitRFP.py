@@ -189,7 +189,7 @@ if input_file is not None:
     df_primary = RateReviewPrimary(primary_carrier,pivot_lane)
     df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_ava)
     df_ratereview =Ratereview(df_primary,df_other,primary_carrier)
-    df_ratereview.columns=ratereview.columns.str.replace('ShipmentID','#Shipment')
+    df_ratereview.columns=df_ratereview.columns.str.replace('ShipmentID','#Shipment')
 
     
     if st.button("Rate Review"):
