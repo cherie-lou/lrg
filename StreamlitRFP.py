@@ -146,7 +146,7 @@ if input_file is not None:
     df_lanereview=df_lanereview.merge(df_dis,on='Lane')
     df_lanereview['Disc Rank']=df_lanereview.groupby('Lane')['Disc'].rank(ascending=False,method = 'min')
     df_lanereview['Min Rank']=df_lanereview.groupby('Lane')['Min'].rank(ascending=True,method = 'min')
-    df_lanereview.columns=df_lanereviewe.columns.str.replace('ShipmentID','#Shipment')
+    df_lanereview.columns=df_lanereview.columns.str.replace('ShipmentID','#Shipment')
 
     st.subheader('Scenario Comparison')
     #Select Carriers for Scenario side by side analysis
