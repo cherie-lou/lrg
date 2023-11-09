@@ -74,7 +74,7 @@ def Ratereview(df_primary,df_other,primary_carrier):
         df_ratereview[disc_title]=df_ratereview[p+'_Disc']-df_ratereview['LLC-Disc']
         df_ratereview[min_title]=df_ratereview[p+'_Min']-df_ratereview['LLC-Min']
         # df_ratereview[disc_title] = df_ratereview.style.applymap(lambda x:style_disc_cell(x),subset=[disc_title])
-    df_ratereview.columns=ratereview.columns.str.replace('ShipmentID','#Shipment')
+    
     return df_ratereview
 
 if input_file is not None:
@@ -189,8 +189,11 @@ if input_file is not None:
     df_primary = RateReviewPrimary(primary_carrier,pivot_lane)
     df_other = RateReviewOther(primary_carrier,pivot_lane,carrier_ava)
     df_ratereview =Ratereview(df_primary,df_other,primary_carrier)
+    df_ratereview.columns=ratereview.columns.str.replace('ShipmentID','#Shipment')
 
+    
     if st.button("Rate Review"):
+        
         st.dataframe(df_ratereview)
             
         # custome_rr_name = st.text_input("Enter the custom filename (e.g., MyCustomFile.xlsx):")
