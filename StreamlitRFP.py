@@ -135,10 +135,18 @@ if input_file is not None:
     df_bycarrier_od=df_bycarrier_od.reset_index()
     df_bycarrier_od =df_bycarrier_od.sort_values(by ='Lane')
 
-    df_lanereview=df_ratereview[['Lane','#Shipment']]
+    df_dis['Lane']=df_dis.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
+    df_loads['Lane']=df_loads.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
+    count_lane = df_loads.groupby('Lane').agg({"ShipmentID":"count"})
+    pivot_lane = df_dis.pivot(index='Lane',columns='Carrier',values = ['Disc','Min'])
+    pivot_lane.columns = [f'{col[1]}_{col[0]}' for col in pivot_lane.columns]
+    pivot_lane = pivot_lane.merge(count_lane,on='Lane').reset_index()
+
+    df_lanereview=pivot_lane[['Lane','ShipmentID']]
     df_lanereview=df_lanereview.merge(df_dis,on='Lane')
     df_lanereview['Disc Rank']=df_lanereview.groupby('Lane')['Disc'].rank(ascending=False,method = 'min')
     df_lanereview['Min Rank']=df_lanereview.groupby('Lane')['Min'].rank(ascending=True,method = 'min')
+    df_lanereview.columns=df_lanereviewe.columns.str.replace('ShipmentID','#Shipment')
 
     st.subheader('Scenario Comparison')
     #Select Carriers for Scenario side by side analysis
@@ -168,12 +176,7 @@ if input_file is not None:
         df_compare = df_compare.drop(['ShipmentID_x','ShipmentID_y','Shipment Count_'+s2],axis =1)
         df_compare.columns=df_compare.columns.str.replace('Shipment Count_'+s1,'#Shipment')
 
-    df_dis['Lane']=df_dis.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
-    df_loads['Lane']=df_loads.apply(lambda row: f"{row['StateOrig']} - {row['StateDest']}",axis = 1)
-    count_lane = df_loads.groupby('Lane').agg({"ShipmentID":"count"})
-    pivot_lane = df_dis.pivot(index='Lane',columns='Carrier',values = ['Disc','Min'])
-    pivot_lane.columns = [f'{col[1]}_{col[0]}' for col in pivot_lane.columns]
-    pivot_lane = pivot_lane.merge(count_lane,on='Lane').reset_index()
+
 
         
     if st.button("Scenario Comparison"):
