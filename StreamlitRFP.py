@@ -135,6 +135,11 @@ if input_file is not None:
     df_bycarrier_od=df_bycarrier_od.reset_index()
     df_bycarrier_od =df_bycarrier_od.sort_values(by ='Lane')
 
+    df_lanereview=df_ratereview[['Lane','#Shipment']]
+    df_lanereview=df_lanereview.merge(df_dis,on='Lane')
+    df_lanereview['Disc Rank']=df_lanereview.groupby('Lane')['Disc'].rank(ascending=False,method = 'min')
+    df_lanereview['Min Rank']=df_lanereview.groupby('Lane')['Min'].rank(ascending=True,method = 'min')
+
     st.subheader('Scenario Comparison')
     #Select Carriers for Scenario side by side analysis
     carrier_ava= list(set(carrier_list)-set(exc_list))
@@ -214,6 +219,7 @@ if input_file is not None:
         df_bycarrier.to_excel(writer, sheet_name='Selected Summary Table')
         df_missing_filtered.to_excel(writer, sheet_name='Missing Lanes Table', index=False)
         df_bycarrier_od.to_excel(writer, sheet_name='Orig Dest Carrier Summary Table')
+        df_lanereview.to_excel(writer, sheet_name = 'Lane Review',index = False)
         merged_df.to_excel(writer, sheet_name='All Combination Table', index=False)
 
     # Prepare the Excel file for download
