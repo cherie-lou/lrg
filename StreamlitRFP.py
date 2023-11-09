@@ -127,7 +127,7 @@ if input_file is not None:
     
     df_bycarrier_od = rank1_merged_df.groupby(['Lane','Carrier']).agg({'ShipmentID':'count','Linehaul':'sum','Czalite0%':'sum'})
     # df_bycarrier_od.rename(columns={'ShipmentID':'Awarded Loads','Linehaul':'Awarded Linehaul','Czalite0%':'BaseRateTotal'})
-    df_bycarrier_od['Volume rank']=df_bycarrier_od.groupby(['Lane'])['ShipmentID'].rank(method='min')
+    df_bycarrier_od['Volume rank']=df_bycarrier_od.groupby(['Lane'])['ShipmentID'].rank(method='max')
     df_bycarrier_od['AvgDisc']=1-df_bycarrier_od['Linehaul']/df_bycarrier_od['Czalite0%']
     df_bycarrier_od[['AvgMin','MinCount']]=min_df.groupby(['Lane','Carrier']).agg({'Linehaul':'mean','ShipmentID':'count'})
     agg_nonmin_od=nonmin_df.groupby(['Lane','Carrier']).agg({'Linehaul': 'sum', 'Czalite0%': 'sum'})
