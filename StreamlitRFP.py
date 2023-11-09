@@ -123,14 +123,16 @@ if input_file is not None:
     agg_nonmin=nonmin_df.groupby('Carrier').agg({'Linehaul': 'sum', 'Czalite0%': 'sum'})
     df_bycarrier['AvgDiscNonMin'] = 1-agg_nonmin['Linehaul'] / agg_nonmin['Czalite0%']
 
+    
     df_bycarrier_od = rank1_merged_df.groupby(['Lane','Carrier']).agg({'ShipmentID':'count','Linehaul':'sum','Czalite0%':'sum'})
-    df_bycarrier_od.rename(columns={'ShipmentID':'Awarded Loads','Linehaul':'Awarded Linehaul','Czalite0%':'BaseRateTotal'})
+    # df_bycarrier_od.rename(columns={'ShipmentID':'Awarded Loads','Linehaul':'Awarded Linehaul','Czalite0%':'BaseRateTotal'})
+    df_bycarrier_od['Volume rank']=df_bycarrier_od.groupby(['Lane'])['ShipmentID'].rank(method='first')
     df_bycarrier_od['AvgDisc']=1-df_bycarrier_od['Linehaul']/df_bycarrier_od['Czalite0%']
     df_bycarrier_od[['AvgMin','MinCount']]=min_df.groupby(['Lane','Carrier']).agg({'Linehaul':'mean','ShipmentID':'count'})
     agg_nonmin_od=nonmin_df.groupby(['Lane','Carrier']).agg({'Linehaul': 'sum', 'Czalite0%': 'sum'})
     df_bycarrier_od['AvgDiscNonMin'] = 1-agg_nonmin_od['Linehaul'] / agg_nonmin_od['Czalite0%']
     df_bycarrier_od=df_bycarrier_od.reset_index()
-    
+    df_bycarrier_od =df_bycarrier_od.sort_values(by ='Lane')
 
     st.subheader('Scenario Comparison')
     #Select Carriers for Scenario side by side analysis
